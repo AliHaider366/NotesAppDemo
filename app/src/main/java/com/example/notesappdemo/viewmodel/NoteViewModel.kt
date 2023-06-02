@@ -5,7 +5,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.example.notesappdemo.db.Note
+import com.example.notesappdemo.model.Note
 import com.example.notesappdemo.db.NoteDatabase
 import com.example.notesappdemo.repo.NoteRepo
 import kotlinx.coroutines.Dispatchers
@@ -13,14 +13,27 @@ import kotlinx.coroutines.launch
 
 class NoteViewModel(application: Application): AndroidViewModel(application) {
 
-    private val allNotes: LiveData<MutableList<Note>>
+    private lateinit var allNotes: LiveData<MutableList<Note>>
 
-    private val allFavNotes: LiveData<MutableList<Note>>
+    private lateinit var allFavNotes: LiveData<MutableList<Note>>
 
     private val noteRepo: NoteRepo
 
     private val _lastRecord = MutableLiveData<Note?>()
     val lastRecord: LiveData<Note?> get() = _lastRecord
+
+    init {
+        val dao = NoteDatabase.getDatabase(application).getNoteDao()
+        noteRepo = NoteRepo(dao)
+    }
+
+    fun initAllNotes(){
+        allNotes = noteRepo.getAllNotes()
+    }
+
+    fun initFavNotes(){
+        allFavNotes = noteRepo.getAllFavNotes()
+    }
 
     fun loadLastRecord() {
         viewModelScope.launch {
@@ -29,27 +42,19 @@ class NoteViewModel(application: Application): AndroidViewModel(application) {
         }
     }
 
-    init {
-        val dao = NoteDatabase.getDatabase(application).getNoteDao()
-        noteRepo = NoteRepo(dao)
-        allNotes = noteRepo.getAllNotes()
-        allFavNotes = noteRepo.getAllFavNotes()
-        //recentNote = allNotes.value!!.get(allNotes.value!!.size - 1)
-    }
-
-    fun insertNote(note:Note){
+    fun insertNote(note: Note){
         viewModelScope.launch(Dispatchers.IO) {
             noteRepo.insertNote(note)
         }
     }
 
-    fun update(note:Note){
+    fun update(note: Note){
         viewModelScope.launch(Dispatchers.IO) {
             noteRepo.updateNote(note)
         }
     }
 
-    fun delete(note:Note){
+    fun delete(note: Note){
         viewModelScope.launch(Dispatchers.IO) {
             noteRepo.deleteNote(note)
         }

@@ -4,22 +4,23 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
-import com.example.notesappdemo.R
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.example.notesappdemo.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
+    private val binding by lazy {
+        ActivityMainBinding.inflate(layoutInflater)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        val view = binding.root
+        setContentView(view)
 
-        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation_view)
-//        val navController = findNavController(R.id.fragment)
-//        bottomNavigationView.setupWithNavController(navController)
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragment) as NavHostFragment
+        val navHostFragment = supportFragmentManager.findFragmentById(binding.fragment.id) as NavHostFragment
+        navHostFragment.navController
         val navController = navHostFragment.navController
-        bottomNavigationView.setupWithNavController(navController)
+        binding.bottomNavigationView.setupWithNavController(navController)
         }
 
 }

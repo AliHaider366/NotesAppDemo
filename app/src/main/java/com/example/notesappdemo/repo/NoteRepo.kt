@@ -1,8 +1,8 @@
 package com.example.notesappdemo.repo
 
 import androidx.lifecycle.LiveData
-import com.example.notesappdemo.db.Note
-import com.example.notesappdemo.db.NoteDao
+import com.example.notesappdemo.model.Note
+import com.example.notesappdemo.db.dao.NoteDao
 
 class NoteRepo(private val noteDao: NoteDao) {
 

@@ -1,56 +1,49 @@
 package com.example.notesappdemo.fragment
 
-import android.app.Application
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import com.example.notesappdemo.R
 import com.example.notesappdemo.databinding.FragmentCreateNoteBinding
-import com.example.notesappdemo.db.Note
+import com.example.notesappdemo.model.Note
 import com.example.notesappdemo.viewmodel.NoteViewModel
 
 class CreateNoteFragment : Fragment() {
 
-    private var _binding: FragmentCreateNoteBinding? = null
+    private val binding by lazy {
+        FragmentCreateNoteBinding.inflate(layoutInflater)
+    }
 
-    private val binding get() = _binding!!
-
-    lateinit var viewModel:NoteViewModel
-
+    lateinit var viewModel: NoteViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
-        _binding = FragmentCreateNoteBinding.inflate(inflater,container,false)
         val view = binding.root
 
-        viewModel = ViewModelProvider(this).get(NoteViewModel::class.java)
+        viewModel = ViewModelProvider(this)[NoteViewModel::class.java]
 
-        binding.createNoteBtn.setOnClickListener{ view->
-            val noteTitle = binding.titleEdittext.text.toString()
-            val noteDesc = binding.descEdittext.text.toString()
-            var favnote = binding.favCheckbox.isChecked
-
-            viewModel.insertNote(Note(null, noteTitle, noteDesc,favnote))
+        binding.createNoteBtn.setOnClickListener { view ->
+                viewModel.insertNote(
+                    Note(
+                        null,
+                        binding.titleEdittext.text.toString(),
+                        binding.descEdittext.text.toString(),
+                        binding.favCheckbox.isChecked
+                    )
+                )
             Toast.makeText(context, "Note Added", Toast.LENGTH_LONG).show()
-            Navigation.findNavController(view).popBackStack()
-            Navigation.findNavController(view).navigate(R.id.homeFragment)
+            findNavController().popBackStack()
+            findNavController().navigate(R.id.homeFragment)
         }
-
         return view
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 
 }

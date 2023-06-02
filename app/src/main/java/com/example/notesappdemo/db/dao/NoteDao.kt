@@ -1,4 +1,4 @@
-package com.example.notesappdemo.db
+package com.example.notesappdemo.db.dao
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
@@ -6,18 +6,19 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
+import com.example.notesappdemo.model.Note
 
 @Dao
 interface NoteDao {
 
     @Insert
-    suspend fun insert(note:Note)
+    suspend fun insert(note: Note)
 
     @Update
-    suspend fun update(note:Note)
+    suspend fun update(note: Note)
 
     @Delete
-    suspend fun delete(note:Note)
+    suspend fun delete(note: Note)
 
     @Query("Select * from noteTable")
     fun getAllNotes():LiveData<MutableList<Note>>
@@ -26,6 +27,6 @@ interface NoteDao {
     fun getAllFavNotes(flag : Boolean):LiveData<MutableList<Note>>
 
     @Query("SELECT * FROM noteTable ORDER BY note_id DESC LIMIT 1")
-    suspend fun getRecentNote():Note?
+    suspend fun getRecentNote(): Note?
 
 }

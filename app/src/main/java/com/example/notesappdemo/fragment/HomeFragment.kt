@@ -12,23 +12,27 @@ import com.example.notesappdemo.databinding.FragmentHomeBinding
 import com.example.notesappdemo.viewmodel.NoteViewModel
 
 
+
 class HomeFragment : Fragment() {
 
-    private var _binding: FragmentHomeBinding? = null
-    private val binding get() = _binding!!
+    private val binding by lazy {
+        FragmentHomeBinding.inflate(layoutInflater)
+    }
 
-    lateinit var viewModel: NoteViewModel
+    private lateinit var viewModel: NoteViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
-        viewModel = ViewModelProvider(this).get(NoteViewModel::class.java)
+        val view = binding.root
+
+        viewModel = ViewModelProvider(this)[NoteViewModel::class.java]
         viewModel.lastRecord.observe(viewLifecycleOwner) { record ->
             // Use the last record here
-            binding.titletextView.setText(record?.title)
-            binding.descriptionTextView.setText(record?.desc)
+            binding.titletextView.text = record?.title
+            binding.descriptionTextView.text = record?.desc
         }
 
         // Call the method to load the last record
@@ -37,11 +41,7 @@ class HomeFragment : Fragment() {
         //Toast.makeText(context, "Data : " + note.value.toString(), Toast.LENGTH_LONG).show()
 
 
-
-
-        _binding = FragmentHomeBinding.inflate(inflater,container,false)
-        val view = binding.root
-        binding.newNoteBtn.setOnClickListener{ view->
+        binding.newNoteBtn.setOnClickListener { view ->
             Navigation.findNavController(view).navigate(R.id.createNoteFragment)
         }
 
