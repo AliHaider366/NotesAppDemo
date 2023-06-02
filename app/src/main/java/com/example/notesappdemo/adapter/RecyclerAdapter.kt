@@ -4,17 +4,25 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.notesappdemo.R
+import com.example.notesappdemo.adapter.diifutil.AdapterDiffUtil
 import com.example.notesappdemo.model.Note
 
 
-class RecyclerAdapter(var items: MutableList<Note>, val callBack: UpdateCallBackInterface) :
+class RecyclerAdapter(var items: MutableList<Note>, val callBack: CallBackInterface) :
     RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
 
-    interface UpdateCallBackInterface {
+    interface CallBackInterface {
         fun updateCallBackFunc(view: View, note: Note)
     }
+    fun updateList(list : MutableList<Note>){
+        val diffResult = DiffUtil.calculateDiff(AdapterDiffUtil(items,list))
+        items = list
+        diffResult.dispatchUpdatesTo(this)
+    }
+
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

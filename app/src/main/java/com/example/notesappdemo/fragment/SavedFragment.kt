@@ -14,11 +14,9 @@ import com.example.notesappdemo.databinding.FragmentSavedBinding
 import com.example.notesappdemo.model.Note
 import com.example.notesappdemo.viewmodel.NoteViewModel
 
-class SavedFragment : Fragment(), RecyclerAdapter.UpdateCallBackInterface {
+class SavedFragment : Fragment(), RecyclerAdapter.CallBackInterface {
 
     private lateinit var viewModel: NoteViewModel
-
-    private lateinit var noteList: MutableList<Note>
 
     private lateinit var adapter: RecyclerAdapter
 
@@ -39,19 +37,18 @@ class SavedFragment : Fragment(), RecyclerAdapter.UpdateCallBackInterface {
 
         viewModel = ViewModelProvider(this)[NoteViewModel::class.java]
         viewModel.initAllNotes()
-        noteList = mutableListOf()
 
         binding.recyclerView.layoutManager = LinearLayoutManager(activity)
-        adapter = RecyclerAdapter(noteList, this@SavedFragment)
+        adapter = RecyclerAdapter(mutableListOf(), this@SavedFragment)
         binding.recyclerView.adapter = adapter
 
         viewModel.getAllNotes().observe(viewLifecycleOwner) { list ->
             if (list.isNotEmpty()) {
-                noteList.addAll(list)
-                adapter.notifyDataSetChanged()
+                //noteList.addAll(list)
+                adapter.updateList(list)
+                //adapter.notifyDataSetChanged()
             }
         }
-
     }
 
     override fun updateCallBackFunc(view: View, note: Note) {

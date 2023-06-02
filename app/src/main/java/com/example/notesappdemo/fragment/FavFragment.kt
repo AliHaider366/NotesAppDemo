@@ -16,11 +16,11 @@ import com.example.notesappdemo.model.Note
 import com.example.notesappdemo.viewmodel.NoteViewModel
 
 
-class FavFragment : Fragment(), RecyclerAdapter.UpdateCallBackInterface {
+class FavFragment : Fragment(), RecyclerAdapter.CallBackInterface {
 
     private lateinit var viewModel: NoteViewModel
 
-    private lateinit var noteList: MutableList<Note>
+    //private lateinit var noteList: MutableList<Note>
 
     private lateinit var adapter: RecyclerAdapter
 
@@ -42,16 +42,17 @@ class FavFragment : Fragment(), RecyclerAdapter.UpdateCallBackInterface {
 
         viewModel = ViewModelProvider(this)[NoteViewModel::class.java]
         viewModel.initFavNotes()
-        noteList = mutableListOf()
+        //noteList = mutableListOf()
 
         binding.recyclerView.layoutManager = LinearLayoutManager(activity)
-        adapter = RecyclerAdapter(noteList, this@FavFragment)
+        adapter = RecyclerAdapter(mutableListOf(), this@FavFragment)
         binding.recyclerView.adapter = adapter
 
         viewModel.getAllFavNotes().observe(viewLifecycleOwner) { list ->
             if (list.isNotEmpty()) {
-                noteList.addAll(list)
-                adapter.notifyDataSetChanged()
+                //noteList.addAll(list)
+                adapter.updateList(list)
+                //adapter.notifyDataSetChanged()
             }
         }
     }
