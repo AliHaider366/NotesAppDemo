@@ -1,6 +1,5 @@
 package com.example.notesappdemo.fragment
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -35,8 +34,6 @@ class FavFragment : Fragment(), RecyclerAdapter.CallBackInterface {
         // Inflate the layout for this fragment
         return binding.root
     }
-
-    @SuppressLint("NotifyDataSetChanged")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -56,7 +53,6 @@ class FavFragment : Fragment(), RecyclerAdapter.CallBackInterface {
             }
         }
     }
-
     override fun updateCallBackFunc(view: View, note: Note) {
         val bundle = Bundle()
         bundle.putString("title", note.title)
@@ -65,5 +61,4 @@ class FavFragment : Fragment(), RecyclerAdapter.CallBackInterface {
         bundle.putBoolean("fav", note.fav!!)
         findNavController().navigate(R.id.updateNoteFragment, bundle)
     }
-
 }
