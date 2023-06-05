@@ -12,7 +12,6 @@ import com.example.notesappdemo.databinding.FragmentHomeBinding
 import com.example.notesappdemo.viewmodel.NoteViewModel
 
 
-
 class HomeFragment : Fragment() {
 
     private val binding by lazy {

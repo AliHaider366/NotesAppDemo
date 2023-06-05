@@ -18,7 +18,6 @@ class CreateNoteFragment : Fragment() {
     private val binding by lazy {
         FragmentCreateNoteBinding.inflate(layoutInflater)
     }
-
     lateinit var viewModel: NoteViewModel
 
     override fun onCreateView(
@@ -27,23 +26,21 @@ class CreateNoteFragment : Fragment() {
     ): View {
 
         val view = binding.root
-
         viewModel = ViewModelProvider(this)[NoteViewModel::class.java]
 
         binding.createNoteBtn.setOnClickListener { view ->
-                viewModel.insertNote(
-                    Note(
-                        null,
-                        binding.titleEdittext.text.toString(),
-                        binding.descEdittext.text.toString(),
-                        binding.favCheckbox.isChecked
-                    )
+            viewModel.insertNote(
+                Note(
+                    null,
+                    binding.titleEdittext.text.toString(),
+                    binding.descEdittext.text.toString(),
+                    binding.favCheckbox.isChecked
                 )
+            )
             Toast.makeText(context, "Note Added", Toast.LENGTH_LONG).show()
             findNavController().popBackStack()
             findNavController().navigate(R.id.homeFragment)
         }
         return view
     }
-
 }

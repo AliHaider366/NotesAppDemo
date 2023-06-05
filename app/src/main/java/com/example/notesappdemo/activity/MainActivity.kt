@@ -17,10 +17,11 @@ class MainActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-        val navHostFragment = supportFragmentManager.findFragmentById(binding.fragment.id) as NavHostFragment
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(binding.fragment.id) as NavHostFragment
         navHostFragment.navController
         val navController = navHostFragment.navController
         binding.bottomNavigationView.setupWithNavController(navController)
-        }
+    }
 
 }

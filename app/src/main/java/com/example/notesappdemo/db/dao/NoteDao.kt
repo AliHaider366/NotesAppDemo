@@ -21,10 +21,10 @@ interface NoteDao {
     suspend fun delete(note: Note)
 
     @Query("Select * from noteTable")
-    fun getAllNotes():LiveData<MutableList<Note>>
+    fun getAllNotes(): LiveData<MutableList<Note>>
 
     @Query("Select * from noteTable where fav_note = :flag")
-    fun getAllFavNotes(flag : Boolean):LiveData<MutableList<Note>>
+    fun getAllFavNotes(flag: Boolean): LiveData<MutableList<Note>>
 
     @Query("SELECT * FROM noteTable ORDER BY note_id DESC LIMIT 1")
     suspend fun getRecentNote(): Note?

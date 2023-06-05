@@ -6,15 +6,15 @@ import com.example.notesappdemo.db.dao.NoteDao
 
 class NoteRepo(private val noteDao: NoteDao) {
 
-    suspend fun insertNote(note: Note){
+    suspend fun insertNote(note: Note) {
         noteDao.insert(note)
     }
 
-    suspend fun updateNote(note: Note){
+    suspend fun updateNote(note: Note) {
         noteDao.update(note)
     }
 
-    suspend fun deleteNote(note: Note){
+    suspend fun deleteNote(note: Note) {
         noteDao.delete(note)
     }
 

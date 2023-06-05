@@ -17,13 +17,12 @@ class RecyclerAdapter(var items: MutableList<Note>, val callBack: CallBackInterf
     interface CallBackInterface {
         fun updateCallBackFunc(view: View, note: Note)
     }
-    fun updateList(list : MutableList<Note>){
-        val diffResult = DiffUtil.calculateDiff(AdapterDiffUtil(items,list))
+
+    fun updateList(list: MutableList<Note>) {
+        val diffResult = DiffUtil.calculateDiff(AdapterDiffUtil(items, list))
         items = list
         diffResult.dispatchUpdatesTo(this)
     }
-
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
@@ -57,8 +56,5 @@ class RecyclerAdapter(var items: MutableList<Note>, val callBack: CallBackInterf
 
         var title: TextView = view.findViewById(R.id.title)
         var desc: TextView = view.findViewById(R.id.description)
-
     }
-
 }
-//diffutils

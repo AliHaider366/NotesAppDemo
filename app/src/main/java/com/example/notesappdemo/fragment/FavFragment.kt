@@ -34,6 +34,7 @@ class FavFragment : Fragment(), RecyclerAdapter.CallBackInterface {
         // Inflate the layout for this fragment
         return binding.root
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -53,6 +54,7 @@ class FavFragment : Fragment(), RecyclerAdapter.CallBackInterface {
             }
         }
     }
+
     override fun updateCallBackFunc(view: View, note: Note) {
         val bundle = Bundle()
         bundle.putString("title", note.title)

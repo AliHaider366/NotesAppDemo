@@ -11,15 +11,13 @@ import com.example.notesappdemo.repo.NoteRepo
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class NoteViewModel(application: Application): AndroidViewModel(application) {
+class NoteViewModel(application: Application) : AndroidViewModel(application) {
 
     private lateinit var allNotes: LiveData<MutableList<Note>>
-
     private lateinit var allFavNotes: LiveData<MutableList<Note>>
-
     private val noteRepo: NoteRepo
-
     private val _lastRecord = MutableLiveData<Note?>()
+
     val lastRecord: LiveData<Note?> get() = _lastRecord
 
     init {
@@ -27,11 +25,11 @@ class NoteViewModel(application: Application): AndroidViewModel(application) {
         noteRepo = NoteRepo(dao)
     }
 
-    fun initAllNotes(){
+    fun initAllNotes() {
         allNotes = noteRepo.getAllNotes()
     }
 
-    fun initFavNotes(){
+    fun initFavNotes() {
         allFavNotes = noteRepo.getAllFavNotes()
     }
 
@@ -42,29 +40,29 @@ class NoteViewModel(application: Application): AndroidViewModel(application) {
         }
     }
 
-    fun insertNote(note: Note){
+    fun insertNote(note: Note) {
         viewModelScope.launch(Dispatchers.IO) {
             noteRepo.insertNote(note)
         }
     }
 
-    fun update(note: Note){
+    fun update(note: Note) {
         viewModelScope.launch(Dispatchers.IO) {
             noteRepo.updateNote(note)
         }
     }
 
-    fun delete(note: Note){
+    fun delete(note: Note) {
         viewModelScope.launch(Dispatchers.IO) {
             noteRepo.deleteNote(note)
         }
     }
 
-    fun getAllNotes(): LiveData<MutableList<Note>>{
+    fun getAllNotes(): LiveData<MutableList<Note>> {
         return allNotes
     }
 
-    fun getAllFavNotes(): LiveData<MutableList<Note>>{
+    fun getAllFavNotes(): LiveData<MutableList<Note>> {
         return allFavNotes
     }
 

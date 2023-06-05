@@ -8,11 +8,11 @@ import com.example.notesappdemo.db.dao.NoteDao
 import com.example.notesappdemo.model.Note
 
 @Database(entities = [Note::class], version = 1)
-abstract class NoteDatabase: RoomDatabase() {
+abstract class NoteDatabase : RoomDatabase() {
 
-    abstract fun getNoteDao() : NoteDao
+    abstract fun getNoteDao(): NoteDao
 
-    companion object{
+    companion object {
         @Volatile
         private var INSTANCE: NoteDatabase? = null
         private const val DB_Name = "note_database.db"
@@ -28,8 +28,6 @@ abstract class NoteDatabase: RoomDatabase() {
                 instance
             }
         }
-
-
 
 
     }
